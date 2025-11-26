@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2024-11-26
+
+### Fixed
+- **Critical**: Fixed cursor jumping to start when typing quickly after sentence endings (period, question mark, exclamation)
+- Improved caret position preservation during DOM updates
+- Fixed active sentence detection at sentence boundaries - new sentences now become active immediately
+- Automatic highlighting updates now work without needing manual "Update Now" button
+- Added rebuild throttling to prevent rapid rebuilds that could cause cursor issues
+
+### Changed
+- Removed "Update Now" button from example (no longer needed - updates are automatic)
+- Improved update timing - immediate updates for sentence boundary changes, debounced for regular typing
+
 ## [2.0.0] - 2024-11-26
 
 ### Changed
@@ -56,6 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **v2.0.1** - Bug fixes: cursor jumping, automatic updates, sentence boundary detection
 - **v2.0.0** - Major refactor with hybrid approach
 - **v1.0.0** - Initial release
 
