@@ -135,6 +135,8 @@
       this.updateTimer = null;
       this.lastContentHash = null;
       this.focusModeEnabled = this.options.enableFocusMode;
+      this.lastRebuildTime = 0;
+      this.isRebuilding = false;
 
       // Bind methods
       this.handleInput = this.handleInput.bind(this);
@@ -546,12 +548,24 @@
                           this.sentenceElements.size === 0 ||
                           !this.hasValidHighlights();
       
-      if (needsRebuild) {
+      // Avoid rebuilding if we just rebuilt very recently (within 50ms)
+      // This prevents cursor jumping when typing quickly
+      const timeSinceLastRebuild = Date.now() - this.lastRebuildTime;
+      const shouldRebuild = needsRebuild && (timeSinceLastRebuild > 50 || !this.isRebuilding);
+      
+      if (shouldRebuild && !this.isRebuilding) {
         // Rebuild highlighting
+        this.isRebuilding = true;
         this.rebuildHighlights(newSentences, activeIndex, caretOffset);
         this.lastContentHash = contentHash;
-      } else {
+        this.lastRebuildTime = Date.now();
+        this.isRebuilding = false;
+      } else if (!needsRebuild) {
         // Just update active sentence (incremental update)
+        this.updateActiveSentenceFromMap(newSentences, activeIndex);
+      } else {
+        // We need to rebuild but just did, so just update active sentence for now
+        // The next update will do the full rebuild
         this.updateActiveSentenceFromMap(newSentences, activeIndex);
       }
       
@@ -693,16 +707,42 @@
         this.sentenceElements.set(sentence.id, span);
       });
       
-      // Save current selection before replacing content
-      const savedCaretOffset = caretOffset;
+      // Get the most current caret position right before DOM manipulation
+      // This ensures we capture the latest position even if user is typing quickly
+      const savedCaretOffset = this.getCaretOffset();
+      const wasFocused = document.activeElement === this.editor || this.editor.contains(document.activeElement);
       
       // Replace editor content
       this.editor.innerHTML = '';
       this.editor.appendChild(container);
       
-      // Restore caret position after DOM update
-      requestAnimationFrame(() => {
+      // Restore focus and caret position immediately
+      // Use a combination of sync and async to ensure it works
+      if (wasFocused) {
+        this.editor.focus();
+      }
+      
+      // Try to restore caret synchronously first
+      try {
         this.setCaretOffset(savedCaretOffset);
+      } catch (e) {
+        // If sync fails, use the fastest async method
+        setTimeout(() => {
+          if (wasFocused) {
+            this.editor.focus();
+          }
+          this.setCaretOffset(savedCaretOffset);
+        }, 0);
+      }
+      
+      // Also ensure it's set after a microtask (catches edge cases)
+      Promise.resolve().then(() => {
+        const currentOffset = this.getCaretOffset();
+        // Only restore if caret is not at the expected position (might have been moved by user)
+        // But if user hasn't moved it, restore to saved position
+        if (Math.abs(currentOffset - savedCaretOffset) > 1 && wasFocused) {
+          this.setCaretOffset(savedCaretOffset);
+        }
       });
     }
     
