@@ -1,0 +1,44 @@
+{
+  "name": "sentence-highlighter",
+  "version": "2.0.0",
+  "description": "A lightweight, zero-dependency JavaScript library for sentence-by-sentence highlighting in contenteditable elements",
+  "main": "sentence-highlighter.js",
+  "files": [
+    "sentence-highlighter.js",
+    "sentence-highlighter.min.js",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node -e \"const fs=require('fs');const code=fs.readFileSync('sentence-highlighter.js','utf8');const min=code.replace(/\\/\\*[\\s\\S]*?\\*\\//g,'').replace(/\\/\\/[^\\n]*/g,'').replace(/\\s+/g,' ').trim();fs.writeFileSync('sentence-highlighter.min.js',min);\"",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "sentence",
+    "highlight",
+    "contenteditable",
+    "writing",
+    "focus",
+    "typewriter",
+    "editor",
+    "vanilla-js",
+    "zero-dependency"
+  ],
+  "author": {
+    "name": "AKHIL DESAI",
+    "email": "akhil.desai20@gmail.com",
+    "url": "https://www.linkedin.com/in/akhildesai20/"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/akhildesai20/sentence-highlighter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/akhildesai20/sentence-highlighter/issues",
+    "email": "akhil.desai20@gmail.com"
+  },
+  "homepage": "https://github.com/akhildesai20/sentence-highlighter#readme"
+}
+

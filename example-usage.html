@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="AKHIL DESAI - akhil.desai20@gmail.com">
+  <title>Sentence Highlighter - Example Usage</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background: #f5f5f5;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 40px;
+    }
+
+    .editor-container {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .editor-toolbar {
+      padding: 15px 20px;
+      background: #f8f8f8;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .editor-toolbar button {
+      padding: 8px 16px;
+      border: 1px solid #ddd;
+      background: white;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .editor-toolbar button:hover {
+      background: #f0f0f0;
+    }
+
+    .editor-toolbar button.active {
+      background: #007bff;
+      color: white;
+      border-color: #007bff;
+    }
+
+    .info {
+      padding: 10px 20px;
+      font-size: 12px;
+      color: #666;
+      background: #f8f8f8;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    #editor {
+      width: 100%;
+      min-height: 400px;
+      padding: 30px;
+      font-size: 18px;
+      line-height: 1.8;
+      outline: none;
+      border: none;
+    }
+
+    /* Sentence Highlighter Styles */
+    .sentence {
+      opacity: 0.18;
+      transition: opacity 0.18s ease, color 0.18s ease;
+    }
+
+    .sentence--active {
+      opacity: 1;
+      color: #333;
+    }
+
+    .sentence-highlighter-focus-off .sentence {
+      opacity: 1;
+    }
+
+    .sentence.heading {
+      font-weight: 600;
+    }
+
+    .stats {
+      padding: 10px 20px;
+      background: #f8f8f8;
+      border-top: 1px solid #e0e0e0;
+      font-size: 12px;
+      color: #666;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sentence Highlighter</h1>
+  <p class="subtitle">A lightweight library for sentence-by-sentence highlighting</p>
+
+  <div class="editor-container">
+    <div class="editor-toolbar">
+      <button id="toggle-focus" class="active">Focus Mode: ON</button>
+      <button id="update-manual">Update Now</button>
+      <button id="get-info">Get Info</button>
+    </div>
+    
+    <div class="info">
+      Try typing some sentences. Each sentence will be highlighted as you type. The sentence containing your cursor will be fully visible, while others will be dimmed (when focus mode is enabled).
+    </div>
+
+    <div id="editor" contenteditable="true">
+      Start typing here. Each sentence will be highlighted automatically. Try writing multiple sentences to see how it works!
+
+      Notice how the active sentence stays fully visible while others fade. This helps you focus on one thought at a time.
+    </div>
+
+    <div class="stats" id="stats">
+      Sentences: 0 | Active: None
+    </div>
+  </div>
+
+  <script src="sentence-highlighter.js"></script>
+  <script>
+    const editor = document.getElementById('editor');
+    const toggleBtn = document.getElementById('toggle-focus');
+    const updateBtn = document.getElementById('update-manual');
+    const infoBtn = document.getElementById('get-info');
+    const statsEl = document.getElementById('stats');
+
+    // Initialize Sentence Highlighter
+    const highlighter = new SentenceHighlighter(editor, {
+      onSentenceChange: (sentences) => {
+        updateStats();
+      },
+      onActiveSentenceChange: (index, sentence) => {
+        updateStats();
+      }
+    });
+
+    // Toggle focus mode
+    toggleBtn.addEventListener('click', () => {
+      highlighter.toggleFocusMode();
+      const enabled = highlighter.focusModeEnabled;
+      toggleBtn.textContent = `Focus Mode: ${enabled ? 'ON' : 'OFF'}`;
+      toggleBtn.classList.toggle('active', enabled);
+    });
+
+    // Manual update
+    updateBtn.addEventListener('click', () => {
+      highlighter.update();
+    });
+
+    // Get info
+    infoBtn.addEventListener('click', () => {
+      const sentences = highlighter.getSentences();
+      const active = highlighter.getActiveSentence();
+      const index = highlighter.getActiveSentenceIndex();
+
+      alert(
+        `Sentences: ${sentences.length}\n` +
+        `Active Index: ${index}\n` +
+        `Active Sentence: "${active ? active.text.substring(0, 50) + '...' : 'None'}"`
+      );
+    });
+
+    // Update stats
+    function updateStats() {
+      const sentences = highlighter.getSentences();
+      const active = highlighter.getActiveSentence();
+      const index = highlighter.getActiveSentenceIndex();
+      
+      statsEl.textContent = 
+        `Sentences: ${sentences.length} | ` +
+        `Active: ${index >= 0 ? `${index + 1} of ${sentences.length}` : 'None'}`;
+    }
+
+    // Initialize stats
+    updateStats();
+  </script>
+  <!-- 
+    Sentence Highlighter Library Example
+    Created by: AKHIL DESAI
+    Email: akhil.desai20@gmail.com
+    LinkedIn: https://www.linkedin.com/in/akhildesai20/
+  -->
+</body>
+</html>
+
