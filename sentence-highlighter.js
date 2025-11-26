@@ -212,6 +212,21 @@
       // Input events (typing, pasting, etc.)
       this.editor.addEventListener('input', this.handleInput);
       
+      // Immediate update for sentence-ending characters
+      this.editor.addEventListener('keydown', (e) => {
+        // Check if the key is a sentence ending character
+        if (this.options.sentenceEndings.includes(e.key)) {
+          // Clear any pending debounced update
+          clearTimeout(this.updateTimer);
+          // Schedule immediate update after input event processes the character
+          // Use a slightly longer delay to ensure the character is in the DOM
+          this.updateTimer = setTimeout(() => {
+            this.scanAndHighlight();
+          }, 20);
+        }
+      });
+      
+      
       // Navigation events
       this.editor.addEventListener('click', this.handleNavigation);
       this.editor.addEventListener('keyup', (e) => {
@@ -237,10 +252,25 @@
      * @returns {void}
      */
     handleInput() {
+      const text = this.getPlainText();
+      const caretOffset = this.getCaretOffset();
+      
+      // Check if we just typed after a sentence ending character
+      // This ensures immediate update when starting a new sentence
+      let shouldUpdateImmediately = false;
+      if (caretOffset > 1) {
+        const charBefore = text[caretOffset - 2]; // -2 because caret is after the just-typed char
+        if (this.options.sentenceEndings.includes(charBefore)) {
+          shouldUpdateImmediately = true;
+        }
+      }
+      
       clearTimeout(this.updateTimer);
+      // Use shorter delay if typing after sentence ending, otherwise use normal debounce
+      const delay = shouldUpdateImmediately ? 10 : this.options.updateDebounce;
       this.updateTimer = setTimeout(() => {
         this.scanAndHighlight();
-      }, this.options.updateDebounce);
+      }, delay);
     }
 
     /**
