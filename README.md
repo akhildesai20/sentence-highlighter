@@ -4,6 +4,8 @@
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Size](https://img.shields.io/badge/size-11KB%20minified-lightgrey.svg)
 ![Zero Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)
+[![npm](https://img.shields.io/npm/v/@akhildesai20/sentencehighlighter.svg)](https://www.npmjs.com/package/@akhildesai20/sentencehighlighter)
+[![npm downloads](https://img.shields.io/npm/dm/@akhildesai20/sentencehighlighter.svg)](https://www.npmjs.com/package/@akhildesai20/sentencehighlighter)
 
 A lightweight, zero-dependency JavaScript library for highlighting sentences one at a time as you type. Perfect for distraction-free writing tools, focus apps, and typewriter-style editors.
 

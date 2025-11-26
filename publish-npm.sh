@@ -38,21 +38,11 @@ echo "  - LICENSE"
 echo "  - README.md"
 echo ""
 
-# Check if package name is available
-echo "🔍 Checking if package name is available..."
-PACKAGE_NAME="sentence-highlighter"
-if npm view "$PACKAGE_NAME" version &>/dev/null; then
-    echo "⚠️  Package '$PACKAGE_NAME' already exists on npm"
-    echo "   Current version on npm: $(npm view "$PACKAGE_NAME" version)"
-    echo "   Your version: $(node -p "require('./package.json').version")"
-    read -p "Continue with publish? (y/n) " -n 1 -r
-    echo
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        exit 1
-    fi
-else
-    echo "✅ Package name is available!"
-fi
+# Get package name from package.json
+PACKAGE_NAME=$(node -p "require('./package.json').name")
+echo "📦 Package name: $PACKAGE_NAME"
+echo "📦 Package version: $(node -p "require('./package.json').version")"
+echo ""
 
 echo ""
 read -p "Ready to publish to npm? (y/n) " -n 1 -r
@@ -64,21 +54,21 @@ fi
 
 echo ""
 echo "📤 Publishing to npm..."
-npm publish
+npm publish --access=public
 
 if [ $? -eq 0 ]; then
     echo ""
     echo "✅ Successfully published to npm!"
     echo ""
     echo "📦 Your package is now available at:"
-    echo "   https://www.npmjs.com/package/sentence-highlighter"
+    echo "   https://www.npmjs.com/package/$PACKAGE_NAME"
     echo ""
     echo "📥 Install with:"
-    echo "   npm install sentence-highlighter"
+    echo "   npm install $PACKAGE_NAME"
     echo ""
     echo "🌐 CDN links (via unpkg/jsDelivr):"
-    echo "   https://unpkg.com/sentence-highlighter@latest/sentence-highlighter.min.js"
-    echo "   https://cdn.jsdelivr.net/npm/sentence-highlighter@latest/sentence-highlighter.min.js"
+    echo "   https://unpkg.com/$PACKAGE_NAME@latest/sentence-highlighter.min.js"
+    echo "   https://cdn.jsdelivr.net/npm/$PACKAGE_NAME@latest/sentence-highlighter.min.js"
 else
     echo ""
     echo "❌ Publish failed. Check the error above."

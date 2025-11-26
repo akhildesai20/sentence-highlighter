@@ -87,8 +87,8 @@ npm publish --access public
 
 ### "Package name already exists"
 
-- Check if the package name is available: https://www.npmjs.com/package/sentence-highlighter
-- If taken, you may need to use a scoped package: `@akhildesai20/sentence-highlighter`
+- Check if the package name is available: https://www.npmjs.com/package/@akhildesai20/sentencehighlighter
+- Package is published as: `@akhildesai20/sentencehighlighter`
 
 ### Workflow Not Triggering
 
@@ -108,7 +108,7 @@ After setting up trusted publishers:
 
 1. ✅ Create a GitHub Release for v2.0.0
 2. ✅ The package will automatically publish to npm
-3. ✅ Share your package: `npm install sentence-highlighter`
+3. ✅ Share your package: `npm install @akhildesai20/sentencehighlighter`
 
 ---
 

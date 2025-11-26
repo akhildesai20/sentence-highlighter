@@ -41,11 +41,18 @@ This is a major refactor of the Sentence Highlighter library with significant pe
 ## 📦 Installation
 
 ```bash
-npm install sentence-highlighter
+npm install @akhildesai20/sentencehighlighter
 ```
 
 Or use via CDN:
 ```html
+<!-- unpkg -->
+<script src="https://unpkg.com/@akhildesai20/sentencehighlighter@latest/sentence-highlighter.min.js"></script>
+
+<!-- jsDelivr -->
+<script src="https://cdn.jsdelivr.net/npm/@akhildesai20/sentencehighlighter@latest/sentence-highlighter.min.js"></script>
+
+<!-- GitHub -->
 <script src="https://cdn.jsdelivr.net/gh/akhildesai20/sentence-highlighter@v2.0.0/sentence-highlighter.min.js"></script>
 ```
 
@@ -70,7 +77,7 @@ const highlighter = new SentenceHighlighter(editor, {
 ## 🔗 Links
 
 - **GitHub**: https://github.com/akhildesai20/sentence-highlighter
-- **npm**: Coming soon
+- **npm**: https://www.npmjs.com/package/@akhildesai20/sentencehighlighter
 - **Issues**: https://github.com/akhildesai20/sentence-highlighter/issues
 
 ## 🙏 Thank You

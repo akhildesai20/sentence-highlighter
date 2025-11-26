@@ -58,15 +58,15 @@ npm publish --access public
 ## Step 3: Verify Publication
 
 After publishing, check:
-- **npm**: https://www.npmjs.com/package/sentence-highlighter
-- **Install**: `npm install sentence-highlighter`
+- **npm**: https://www.npmjs.com/package/@akhildesai20/sentencehighlighter
+- **Install**: `npm install @akhildesai20/sentencehighlighter`
 
 ## That's It! 🎉
 
 Your package will be available at:
-- **npm**: `npm install sentence-highlighter`
-- **unpkg**: `https://unpkg.com/sentence-highlighter@latest/sentence-highlighter.min.js`
-- **jsDelivr**: `https://cdn.jsdelivr.net/npm/sentence-highlighter@latest/sentence-highlighter.min.js`
+- **npm**: `npm install @akhildesai20/sentencehighlighter`
+- **unpkg**: `https://unpkg.com/@akhildesai20/sentencehighlighter@latest/sentence-highlighter.min.js`
+- **jsDelivr**: `https://cdn.jsdelivr.net/npm/@akhildesai20/sentencehighlighter@latest/sentence-highlighter.min.js`
 
 ---
 

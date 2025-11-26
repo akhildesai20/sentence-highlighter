@@ -70,7 +70,7 @@ For the first time, this will publish version 2.0.0.
 ### Step 4: Verify Publication
 
 Check your package at:
-- https://www.npmjs.com/package/sentence-highlighter
+- https://www.npmjs.com/package/@akhildesai20/sentencehighlighter
 
 ## Updating Versions
 
@@ -94,15 +94,15 @@ When making changes:
 4. **Build and publish**:
    ```bash
    npm run build
-   npm publish
+   npm publish --access=public
    ```
 
 ## CDN Distribution
 
 After publishing to npm, your package will be available on:
 
-- **unpkg**: `https://unpkg.com/sentence-highlighter@latest/sentence-highlighter.min.js`
-- **jsDelivr**: `https://cdn.jsdelivr.net/npm/sentence-highlighter@latest/sentence-highlighter.min.js`
+- **unpkg**: `https://unpkg.com/@akhildesai20/sentencehighlighter@latest/sentence-highlighter.min.js`
+- **jsDelivr**: `https://cdn.jsdelivr.net/npm/@akhildesai20/sentencehighlighter@latest/sentence-highlighter.min.js`
 
 You can also use GitHub as CDN:
 - `https://cdn.jsdelivr.net/gh/akhildesai20/sentence-highlighter@main/sentence-highlighter.min.js`
@@ -131,8 +131,8 @@ The GitHub Pages workflow is already set up. After pushing to main:
 ### "You do not have permission to publish"
 
 - Make sure you're logged in: `npm whoami`
-- Check if package name is taken: https://www.npmjs.com/package/sentence-highlighter
-- If taken, you may need to use a scoped package: `@yourusername/sentence-highlighter`
+- Check if package name is taken: https://www.npmjs.com/package/@akhildesai20/sentencehighlighter
+- Package is published as: `@akhildesai20/sentencehighlighter`
 
 ### "Package name already exists"
 
