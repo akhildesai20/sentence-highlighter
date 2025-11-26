@@ -443,20 +443,14 @@
 
     /**
      * Find which sentence contains the caret
+     * @deprecated This method is kept for backward compatibility but findActiveSentenceIndex is preferred
      */
     findActiveSentenceId(caretOffset) {
-      for (const [id, sentence] of this.sentenceMap) {
-        if (caretOffset >= sentence.start && caretOffset <= sentence.end) {
-          return id;
-        }
+      const sentences = Array.from(this.sentenceMap.values());
+      const activeIndex = this.findActiveSentenceIndex(sentences, caretOffset);
+      if (activeIndex >= 0 && activeIndex < sentences.length) {
+        return sentences[activeIndex].id;
       }
-      
-      // If caret is beyond all sentences, return last sentence
-      if (this.sentenceMap.size > 0) {
-        const lastSentence = Array.from(this.sentenceMap.values()).pop();
-        return lastSentence.id;
-      }
-      
       return null;
     }
 
@@ -528,11 +522,24 @@
     findActiveSentenceIndex(sentences, caretOffset) {
       for (let i = 0; i < sentences.length; i++) {
         const s = sentences[i];
-        if (caretOffset >= s.start && caretOffset <= s.end) {
+        // Check if caret is within sentence bounds (excluding the end boundary)
+        if (caretOffset >= s.start && caretOffset < s.end) {
           return i;
         }
+        // If caret is exactly at the end boundary of a sentence, prefer the next sentence
+        // This handles the case when typing after a period - the new sentence should be active
+        if (caretOffset === s.end && i < sentences.length - 1) {
+          return i + 1;
+        }
       }
-      return sentences.length > 0 ? sentences.length - 1 : -1;
+      // If caret is at or beyond the end of the last sentence, return last sentence
+      if (sentences.length > 0) {
+        const lastSentence = sentences[sentences.length - 1];
+        if (caretOffset >= lastSentence.start) {
+          return sentences.length - 1;
+        }
+      }
+      return -1;
     }
     
     /**
