@@ -1,5 +1,10 @@
 # Sentence Highlighter
 
+![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+![Size](https://img.shields.io/badge/size-11KB%20minified-lightgrey.svg)
+![Zero Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)
+
 A lightweight, zero-dependency JavaScript library for highlighting sentences one at a time as you type. Perfect for distraction-free writing tools, focus apps, and typewriter-style editors.
 
 **Created by:** [AKHIL DESAI](https://www.linkedin.com/in/akhildesai20/)  
@@ -16,6 +21,10 @@ A lightweight, zero-dependency JavaScript library for highlighting sentences one
 - 📱 **Works everywhere** - Works with any `contenteditable` element
 - 🚀 **Performance optimized** - Uses virtual sentence model, CSS-based highlighting, and incremental updates
 
+## 🚀 Quick Start
+
+**Try it live:** [View Demo](https://akhildesai20.github.io/sentence-highlighter/example-usage.html)
+
 ## Installation
 
 ### Option 1: Download and Include
@@ -26,13 +35,13 @@ Download `sentence-highlighter.js` and include it in your HTML:
 <script src="sentence-highlighter.js"></script>
 ```
 
-### Option 2: CDN (when published)
+### Option 2: CDN (via GitHub)
 
 ```html
-<script src="https://cdn.example.com/sentence-highlighter.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/akhildesai20/sentence-highlighter@main/sentence-highlighter.min.js"></script>
 ```
 
-### Option 3: npm (when published)
+### Option 3: npm (coming soon)
 
 ```bash
 npm install sentence-highlighter

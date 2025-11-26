@@ -1,0 +1,20 @@
+# Documentation
+*.md
+!README.md
+example-usage.html
+LIBRARY-README.md
+sentence-highlighter-README.md
+
+# Git
+.gitignore
+.github/
+
+# Scripts
+*.sh
+setup-github.sh
+create-and-push.sh
+
+# Development
+CONTRIBUTING.md
+CHANGELOG.md
+
