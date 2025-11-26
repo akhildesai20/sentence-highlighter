@@ -26,10 +26,17 @@ Download `sentence-highlighter.js` and include it in your HTML:
 <script src="sentence-highlighter.js"></script>
 ```
 
-### Option 2: CDN (when published)
+### Option 2: CDN (via npm/unpkg)
 
 ```html
-<script src="https://cdn.example.com/sentence-highlighter.min.js"></script>
+<!-- unpkg -->
+<script src="https://unpkg.com/@akhildesai20/sentencehighlighter@latest/sentence-highlighter.min.js"></script>
+
+<!-- jsDelivr -->
+<script src="https://cdn.jsdelivr.net/npm/@akhildesai20/sentencehighlighter@latest/sentence-highlighter.min.js"></script>
+
+<!-- GitHub -->
+<script src="https://cdn.jsdelivr.net/gh/akhildesai20/sentence-highlighter@main/sentence-highlighter.min.js"></script>
 ```
 
 ### Option 3: npm
