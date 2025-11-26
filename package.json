@@ -4,9 +4,11 @@
   "description": "A lightweight, zero-dependency JavaScript library for sentence-by-sentence highlighting in contenteditable elements",
   "main": "sentence-highlighter.js",
   "browser": "sentence-highlighter.min.js",
+  "types": "sentence-highlighter.d.ts",
   "files": [
     "sentence-highlighter.js",
     "sentence-highlighter.min.js",
+    "sentence-highlighter.d.ts",
     "LICENSE",
     "README.md"
   ],
