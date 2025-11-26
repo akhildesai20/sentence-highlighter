@@ -32,15 +32,21 @@ Download `sentence-highlighter.js` and include it in your HTML:
 <script src="https://cdn.example.com/sentence-highlighter.min.js"></script>
 ```
 
-### Option 3: npm (when published)
+### Option 3: npm
 
 ```bash
-npm install sentence-highlighter
+npm install @akhildesai20/sentencehighlighter
 ```
 
 ```javascript
-import SentenceHighlighter from 'sentence-highlighter';
+// ES6 modules
+import SentenceHighlighter from '@akhildesai20/sentencehighlighter';
+
+// CommonJS
+const SentenceHighlighter = require('@akhildesai20/sentencehighlighter');
 ```
+
+**TypeScript support included!** The package includes TypeScript definitions.
 
 ## Quick Start
 
