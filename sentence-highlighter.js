@@ -218,11 +218,12 @@
         if (this.options.sentenceEndings.includes(e.key)) {
           // Clear any pending debounced update
           clearTimeout(this.updateTimer);
-          // Schedule immediate update after input event processes the character
-          // Use a slightly longer delay to ensure the character is in the DOM
-          this.updateTimer = setTimeout(() => {
-            this.scanAndHighlight();
-          }, 20);
+          // Use requestAnimationFrame for immediate update after character is inserted
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              this.scanAndHighlight();
+            });
+          });
         }
       });
       
@@ -247,7 +248,8 @@
     }
 
     /**
-     * Handle input events with debouncing
+     * Handle input events with smart debouncing
+     * Updates immediately when sentence boundaries change
      * @private
      * @returns {void}
      */
@@ -255,22 +257,46 @@
       const text = this.getPlainText();
       const caretOffset = this.getCaretOffset();
       
-      // Check if we just typed after a sentence ending character
-      // This ensures immediate update when starting a new sentence
+      // Check if we're at or just after a sentence boundary
       let shouldUpdateImmediately = false;
-      if (caretOffset > 1) {
-        const charBefore = text[caretOffset - 2]; // -2 because caret is after the just-typed char
+      
+      // Check if we just typed a sentence ending character
+      if (caretOffset > 0) {
+        const charAtCaret = text[caretOffset - 1];
+        if (this.options.sentenceEndings.includes(charAtCaret)) {
+          shouldUpdateImmediately = true;
+        }
+      }
+      
+      // Check if we're typing right after a sentence ending
+      if (!shouldUpdateImmediately && caretOffset > 1) {
+        const charBefore = text[caretOffset - 2];
         if (this.options.sentenceEndings.includes(charBefore)) {
           shouldUpdateImmediately = true;
         }
       }
       
+      // Check if sentence count changed (new sentence created)
+      if (!shouldUpdateImmediately && this.sentenceMap.size > 0) {
+        const currentSentences = this.buildSentenceMap();
+        if (currentSentences.length !== this.sentenceMap.size) {
+          shouldUpdateImmediately = true;
+        }
+      }
+      
       clearTimeout(this.updateTimer);
-      // Use shorter delay if typing after sentence ending, otherwise use normal debounce
-      const delay = shouldUpdateImmediately ? 10 : this.options.updateDebounce;
-      this.updateTimer = setTimeout(() => {
-        this.scanAndHighlight();
-      }, delay);
+      
+      if (shouldUpdateImmediately) {
+        // Use requestAnimationFrame for immediate, smooth update
+        requestAnimationFrame(() => {
+          this.scanAndHighlight();
+        });
+      } else {
+        // Normal debounce for regular typing within same sentence
+        this.updateTimer = setTimeout(() => {
+          this.scanAndHighlight();
+        }, this.options.updateDebounce);
+      }
     }
 
     /**
