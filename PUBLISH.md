@@ -8,6 +8,37 @@ This guide explains how to publish the Sentence Highlighter library to npm and o
 2. **Login to npm**: Run `npm login` in your terminal
 3. **Verify package.json**: Make sure all details are correct
 
+## Publishing Methods
+
+### Method 1: Manual Publishing (Local)
+
+Use this for the first publish or manual updates.
+
+### Method 2: Automated Publishing via GitHub Actions (Recommended)
+
+Use **npm Trusted Publishers** for secure, automated publishing from GitHub Actions.
+
+#### Setting Up Trusted Publishers
+
+1. **Go to npm Trusted Publishers**: https://docs.npmjs.com/trusted-publishers
+2. **Add GitHub as a trusted publisher**:
+   - Go to: https://www.npmjs.com/settings/YOUR_USERNAME/trusted-publishers
+   - Click "Add Trusted Publisher"
+   - Select "GitHub Actions"
+   - Enter your GitHub username: `akhildesai20`
+   - Enter repository: `sentence-highlighter`
+   - Click "Add"
+
+3. **The workflow will automatically publish** when you:
+   - Create a GitHub Release, OR
+   - Manually trigger the workflow
+
+**Benefits:**
+- ✅ No need to store npm tokens as secrets
+- ✅ More secure (OIDC authentication)
+- ✅ Automatic publishing on releases
+- ✅ Provenance attestation included
+
 ## Publishing to npm
 
 ### Step 1: Verify Package

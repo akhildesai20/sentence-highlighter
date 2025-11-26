@@ -1,0 +1,38 @@
+name: Publish to npm
+
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies (if any)
+        run: npm ci || echo "No dependencies to install"
+
+      - name: Build
+        run: npm run build
+
+      - name: Publish to npm
+        run: npm publish --provenance --access public
+        # No NODE_AUTH_TOKEN needed when using trusted publishers!
+        # Make sure you've set up trusted publishers at:
+        # https://www.npmjs.com/settings/YOUR_USERNAME/trusted-publishers
+
